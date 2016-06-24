@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library(optparse)
-# library(dada2)
+
 
 ## generate fastq sequence quality plots
 
@@ -53,7 +53,6 @@ get_sample_names_and_fps = function(indir, fwd_sfx, rev_sfx) {
   # print(sample.names)
   list(sample.names = sample.names, fnFs = fnFs, fnRs = fnRs)
 }
-# names_fps = get_sample_names_and_fps('~/Software/dada2helper/inst/extdata/', '_R1', '_R2')
 
 names_fps = get_sample_names_and_fps(opt$input_dir, opt$fwd_sfx, opt$rev_sfx)
 
