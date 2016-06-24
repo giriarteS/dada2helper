@@ -1,0 +1,9 @@
+Package: dada2helper
+Type: Package
+Title: Additional Scripts and Functions for Use with dada2 processing
+Version: 0.1.0
+Author: person("Jonathan W.", "Leff", email = "jonathan.leff@colorado.edu", role = c("aut", "cre"))
+Maintainer: Jonathan W. Leff <jonathan.leff@colorado.edu>
+Description: This package is intended to facilitate processing of sequence data using the dada2 package.
+License: GPL-3
+LazyData: TRUE
