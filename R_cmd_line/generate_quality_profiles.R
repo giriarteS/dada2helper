@@ -59,12 +59,13 @@ names_fps = get_sample_names_and_fps(opt$input_dir, opt$fwd_sfx, opt$rev_sfx)
 
 sample_idxs = sample(length(names_fps$sample.names), opt$num_samples)
 
+outdir = ifelse(
+  substr(opt$output_dir, nchar(opt$output_dir), nchar(opt$output_dir)) == '/',
+  opt$output_dir,
+  paste0(opt$output_dir, '/')
+)
+if (!dir.exists(outdir)) dir.create(outdir)
 for(i in sample_idxs) {
-  outdir = ifelse(
-    substr(opt$output_dir, nchar(opt$output_dir), nchar(opt$output_dir)) == '/',
-    opt$output_dir,
-    paste0(opt$output_dir, '/')
-  )
   pref = paste0(outdir, "qualplot_", names_fps$sample.names[i])
   # print(paste0(pref, "_F.pdf"))
   pdf(file = paste0(pref, "_F.pdf"), width = 5, height = 5)
