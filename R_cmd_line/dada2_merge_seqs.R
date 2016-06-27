@@ -43,19 +43,20 @@ path_derep = ifelse(substr(indir_derep, nchar(indir_derep),
 dada_files = list.files(path_dada)
 for (i in seq_along(dada_files)) {
   if (i == 1)
-    dadas1 = readRDS(paste0(path_dada[i], file))
+    dadas1 = readRDS(paste0(path_dada, dada_files[i]))
   else if (i == 2)
-    dadas2 = readRDS(paste0(path_dada[i], file))
+    dadas2 = readRDS(paste0(path_dada, dada_files[i]))
 }
 derep_files = list.files(path_derep)
 for (i in seq_along(derep_files)) {
   if (i == 1)
-    dereps1 = readRDS(paste0(path_dereps[i], file))
+    dereps1 = readRDS(paste0(path_derep, derep_files[i]))
   else if (i == 2)
-    dereps2 = readRDS(paste0(path_dereps[i], file))
+    dereps2 = readRDS(paste0(path_derep, derep_files[i]))
 }
 
-merged = mergePairs(dadas1, dereps1, dadas2, dereps2, verbose = opts$verbose)
+merged = dada2::mergePairs(dadas1, dereps1, dadas2, dereps2,
+                           verbose = opt$verbose)
 
 # output as r data objects
 outdir = ifelse(
@@ -65,5 +66,4 @@ outdir = ifelse(
 )
 if (!dir.exists(outdir)) dir.create(outdir)
 saveRDS(merged, file = paste0(outdir, "merged.RDS"))
-save(dadaRs.trim, file = paste0(outdir, "dadaRs_trim.RData"))
 
