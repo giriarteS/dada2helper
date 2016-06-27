@@ -3,7 +3,6 @@
 library(optparse)
 
 
-## Quality filter sequences in fastq files
 
 description = "Denoise sequences using dada2."
 
@@ -16,8 +15,8 @@ option_list = list(
                             "saved (default = ./dada)."),
               metavar = "output_directory"),
   make_option(c("-s", "--subset"), type = "logical", default = FALSE,
-              help = paste0("Whether to parameterize initial error rates on a ", 
-                            "random 10% subset of the samples (default = ", 
+              help = paste0("Whether to parameterize initial error rates on a ",
+                            "random 10% subset of the samples (default = ",
                             "FALSE).")),
   make_option(c("-t", "--threads"), type = "integer", default = 1,
               help = "The number of threads (cores) to use (default = 1).")
@@ -34,8 +33,8 @@ if (is.null(opt$input_dir)) {
 indir = opt$input_dir
 path = ifelse(substr(indir, nchar(indir), nchar(indir)) == '/',
               indir, paste0(indir, '/'))
-load(paste0(path, "derepFs.RData"))
-load(paste0(path, "derepRs.RData"))
+derepFs = readRDS(paste0(path, "derepFs.RDS"))
+derepRs = readRDS(paste0(path, "derepRs.RDS"))
 
 if (!opt$subset) {
   message("Denoising forward reads.")
@@ -101,5 +100,5 @@ outdir = ifelse(
   paste0(opt$output_dir, '/')
 )
 if (!dir.exists(outdir)) dir.create(outdir)
-save(dadaFs, file = paste0(outdir, "dadaFs.RData"))
-save(dadaRs, file = paste0(outdir, "dadaRs.RData"))
+saveRDS(dadaFs, file = paste0(outdir, "dadaFs.RDS"))
+saveRDS(dadaRs, file = paste0(outdir, "dadaRs.RDS"))

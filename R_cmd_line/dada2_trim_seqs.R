@@ -3,7 +3,6 @@
 library(optparse)
 
 
-## Quality filter sequences in fastq files
 
 description = "Trim primer/adapter seqs from dada objects."
 
@@ -11,7 +10,8 @@ option_list = list(
   make_option(c("-i", "--input_dir"), type = "character", default = NULL,
               help = "Directory with dada RData objects.",
               metavar = "input_directory"),
-  make_option(c("-o", "--output_dir"), type = "character", default = "./dada",
+  make_option(c("-o", "--output_dir"), type = "character",
+              default = "./dada_trim",
               help = paste0("Directory where the trimmed dada files will be ",
                             "saved (default = ./dada_trim)."),
               metavar = "output_directory"),
@@ -33,7 +33,7 @@ if (is.null(opt$input_dir)) {
 
 
 trim_dada_seqs = function(dada, R_trim_pattern) {
-  if (is(dada, "dada")) {
+  if (methods::is(dada, "dada")) {
     dada = list(dada)
   }
   out_dada = dada
@@ -43,17 +43,17 @@ trim_dada_seqs = function(dada, R_trim_pattern) {
     trimmed = Biostrings::trimLRPatterns(
       Lpattern = "",
       Rpattern = paste0(
-        tr,
+        R_trim_pattern,
         paste0("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
                "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
                "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
                "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
       ),
-      DNAStringSet(dada[[i]]$sequence),
+      Biostrings::DNAStringSet(dada[[i]]$sequence),
       Rfixed = FALSE
     )
     message(paste0(names(dada)[i], ' median trimmed length: ',
-                   mean(width(trimmed))))
+                   mean(Biostrings::width(trimmed))))
     # Check if duplicate sequences after trimming, meaning that dada probably
     # split biological sequence variants into multiple seqs because of junk
     # bases after primer/adapters). Not necessarily a problem since
@@ -72,9 +72,11 @@ trim_dada_seqs = function(dada, R_trim_pattern) {
 indir = opt$input_dir
 path = ifelse(substr(indir, nchar(indir), nchar(indir)) == '/',
               indir, paste0(indir, '/'))
-load(paste0(path, "dadaFs.RData"))
-load(paste0(path, "dadaRs.RData"))
+dadaFs = readRDS(paste0(path, "dadaFs.RDS"))
+dadaRs = readRDS(paste0(path, "dadaRs.RDS"))
+message("Trimming forward reads")
 dadaFs.trim = trim_dada_seqs(dadaFs, opt$fwd_trim_seq)
+message("Trimming reverse reads")
 dadaRs.trim = trim_dada_seqs(dadaRs, opt$rev_trim_seq)
 
 
@@ -85,5 +87,5 @@ outdir = ifelse(
   paste0(opt$output_dir, '/')
 )
 if (!dir.exists(outdir)) dir.create(outdir)
-save(dadaFs.trim, file = paste0(outdir, "dadaFs_trim.RData"))
-save(dadaRs.trim, file = paste0(outdir, "dadaRs_trim.RData"))
+saveRDS(dadaFs.trim, file = paste0(outdir, "dadaFs_trim.RDS"))
+saveRDS(dadaRs.trim, file = paste0(outdir, "dadaRs_trim.RDS"))

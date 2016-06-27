@@ -67,5 +67,5 @@ outdir = ifelse(
   paste0(opt$output_dir, '/')
 )
 if (!dir.exists(outdir)) dir.create(outdir)
-save(derepFs, file = paste0(outdir, "derepFs.RData"))
-save(derepRs, file = paste0(outdir, "derepRs.RData"))
+saveRDS(derepFs, file = paste0(outdir, "derepFs.RDS"))
+saveRDS(derepRs, file = paste0(outdir, "derepRs.RDS"))
