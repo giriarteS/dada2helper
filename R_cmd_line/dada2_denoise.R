@@ -16,8 +16,9 @@ option_list = list(
                             "saved (default = ./dada)."),
               metavar = "output_directory"),
   make_option(c("-s", "--subset"), type = "logical", default = FALSE,
-              help = paste0("Whether to parameterize error rates on a random ",
-                            "10% subset of the samples (default = FALSE).")),
+              help = paste0("Whether to parameterize initial error rates on a ", 
+                            "random 10% subset of the samples (default = ", 
+                            "FALSE).")),
   make_option(c("-t", "--threads"), type = "integer", default = 1,
               help = "The number of threads (cores) to use (default = 1).")
 )
