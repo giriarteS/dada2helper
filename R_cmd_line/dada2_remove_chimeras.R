@@ -35,7 +35,7 @@ seqtab.nochim = dada2::removeBimeraDenovo(seqtab, verbose = opt$verbose)
 message("ORIGINAL TABLE:\n")
 message(paste0("Dimensions: ", paste(dim(seqtab), collapse = "; "), "\n"))
 message("TABLE WITH CHIMERAS REMOVED:\n")
-message(paste0("Dimensions: ", paste(dim(seqtab), collapse = "; "), "\n"))
+message(paste0("Dimensions: ", paste(dim(seqtab.nochim), collapse = "; "), "\n"))
 message(paste0(
   "Proportion seqs that were not chimeras: ",
   sum(seqtab.nochim) / sum(seqtab),
