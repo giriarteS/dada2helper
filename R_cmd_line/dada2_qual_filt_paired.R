@@ -28,12 +28,12 @@ option_list = list(
   make_option(c("-e", "--maxEE"), type = "double", default = 2,
               help = paste0("The maximum expected errors per sequence ",
                             "allowed (dDefault = 2).")),
-  make_option(c("-v", "--verbose"), type = "logical", default = FALSE,
-              help = "Print out extra info?"),
   make_option(c("-o", "--output_dir"), type = "character", default = NULL,
               help = paste0("Directory where the filtered sequences will be ",
                             "saved (default = <input_dir>_filtered)."),
-              metavar = "output_directory")
+              metavar = "output_directory"),
+  make_option(c("-v", "--verbose"), default = FALSE, action = 'store_true',
+              help = "Print out extra info?")
 )
 
 opt_parser = OptionParser(option_list = option_list, description = description)
@@ -87,8 +87,8 @@ if (is.null(opt$output_dir)) {
   )
 }
 if (!dir.exists(outdir)) dir.create(outdir)
-filtFs = paste0(outdir, "/", names_fps$sample.names, "_F_filt.fastq.gz")
-filtRs = paste0(outdir, "/", names_fps$sample.names, "_R_filt.fastq.gz")
+filtFs = paste0(outdir, "/", names_fps$sample.names, "__filtR1.fastq.gz")
+filtRs = paste0(outdir, "/", names_fps$sample.names, "__filtR2.fastq.gz")
 # Filters
 for(i in seq_along(names_fps$fnFs)) {
   print(paste0(i, " of ", length(names_fps$fnFs)))

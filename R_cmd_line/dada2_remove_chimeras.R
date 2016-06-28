@@ -4,7 +4,7 @@ library(optparse)
 
 
 
-description = "Merge paired end sequences and produce taxa table."
+description = "Remove chimeras and produce taxa table."
 
 option_list = list(
   make_option(c("-i", "--input"), type = "character", default = NULL,
@@ -14,7 +14,7 @@ option_list = list(
               help = paste0("Directory where the no chimera sequence table ",
                             "file will be saved (default = ./no_chim)."),
               metavar = "output_directory"),
-  make_option(c("-v", "--verbose"), type = "logical", default = FALSE,
+  make_option(c("-v", "--verbose"), default = FALSE, action = 'store_true',
               help = "Print out extra info?")
 )
 

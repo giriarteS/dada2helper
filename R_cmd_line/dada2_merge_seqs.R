@@ -17,7 +17,7 @@ option_list = list(
               help = paste0("Directory where the merged seqs R files will be ",
                             "saved (default = ./merged)."),
               metavar = "output_directory"),
-  make_option(c("-v", "--verbose"), type = "logical", default = FALSE,
+  make_option(c("-v", "--verbose"), default = FALSE, action = 'store_true',
               help = "Print out extra info?")
 )
 
