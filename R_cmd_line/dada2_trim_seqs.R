@@ -60,7 +60,7 @@ trim_dada_seqs = function(dada, R_trim_pattern) {
     # 'makeSequenceTable()' will merge duplicate sequences.
     if (any(duplicated(trimmed))) {
       warning(paste0(names(dada)[i],
-                     ' has duplicate seqs. Results might be wrong.'))
+                     ' has duplicate seqs. These should be merged downstream.'))
     }
     out_dada[[i]]$sequence = as.character(trimmed)
     out_dada[[i]]$clustering$sequence = as.character(trimmed)
