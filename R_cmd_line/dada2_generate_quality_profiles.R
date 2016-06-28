@@ -36,7 +36,7 @@ get_sample_names_and_fps = function(indir, fwd_sfx, rev_sfx) {
   path = ifelse(substr(indir, nchar(indir), nchar(indir)) == '/',
                 indir, paste0(indir, '/'))
   fns = list.files(path)
-  fastqs = fns[grepl(".fq$|.fastq$", fns)]
+  fastqs = fns[grepl(".fq$|.fastq$|.fq.gz$|.fastq.gz$", fns)]
   # print(fastqs)
   fastqs = sort(fastqs) # Sort ensures forward/reverse reads are in same order
   fnFs = fastqs[grepl(fwd_sfx, fastqs)] # Just the forward read files
