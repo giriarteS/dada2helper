@@ -8,10 +8,10 @@ description = "Merge paired end sequences and produce taxa table."
 
 option_list = list(
   make_option(c("-i", "--input_dir_dada"), type = "character", default = NULL,
-              help = "Directory with dada RData objects.",
+              help = "Directory with dada RDS objects.",
               metavar = "input_directory"),
   make_option(c("-j", "--input_dir_derep"), type = "character", default = NULL,
-              help = "Directory with dereplicated RData objects.",
+              help = "Directory with dereplicated RDS objects.",
               metavar = "input_directory"),
   make_option(c("-o", "--output_dir"), type = "character", default = "./merged",
               help = paste0("Directory where the merged seqs R files will be ",
@@ -66,4 +66,6 @@ outdir = ifelse(
 )
 if (!dir.exists(outdir)) dir.create(outdir)
 saveRDS(merged, file = paste0(outdir, "merged.RDS"))
+seqtab = dada2::makeSequenceTable(merged)
+saveRDS(seqtab, file = paste0(outdir, "seqtab.RDS"))
 

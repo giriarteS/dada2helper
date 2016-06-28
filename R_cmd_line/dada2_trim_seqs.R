@@ -8,7 +8,7 @@ description = "Trim primer/adapter seqs from dada objects."
 
 option_list = list(
   make_option(c("-i", "--input_dir"), type = "character", default = NULL,
-              help = "Directory with dada RData objects.",
+              help = "Directory with dada RDS objects.",
               metavar = "input_directory"),
   make_option(c("-o", "--output_dir"), type = "character",
               default = "./dada_trim",

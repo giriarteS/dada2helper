@@ -8,7 +8,7 @@ description = "Denoise sequences using dada2."
 
 option_list = list(
   make_option(c("-i", "--input_dir"), type = "character", default = NULL,
-              help = "Directory with dereplicated RData objects.",
+              help = "Directory with dereplicated RDS objects.",
               metavar = "input_directory"),
   make_option(c("-o", "--output_dir"), type = "character", default = "./dada",
               help = paste0("Directory where the dada files will be ",
