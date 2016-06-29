@@ -72,8 +72,9 @@ trim_dada_seqs = function(dada, R_trim_pattern) {
 indir = opt$input_dir
 path = ifelse(substr(indir, nchar(indir), nchar(indir)) == '/',
               indir, paste0(indir, '/'))
-dadaFs = readRDS(paste0(path, "dadaFs.RDS"))
-dadaRs = readRDS(paste0(path, "dadaRs.RDS"))
+files = list.files(path)
+dadaFs = readRDS(paste0(path, files[grepl("Fs", files)]))
+dadaRs = readRDS(paste0(path, files[grepl("Rs", files)]))
 message("Trimming forward reads")
 dadaFs.trim = trim_dada_seqs(dadaFs, opt$fwd_trim_seq)
 message("Trimming reverse reads")
