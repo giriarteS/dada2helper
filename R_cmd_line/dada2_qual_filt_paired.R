@@ -27,7 +27,7 @@ option_list = list(
                             "truncation")),
   make_option(c("-e", "--maxEE"), type = "double", default = 2,
               help = paste0("The maximum expected errors per sequence ",
-                            "allowed (dDefault = 2).")),
+                            "allowed (Default = 2).")),
   make_option(c("-o", "--output_dir"), type = "character", default = NULL,
               help = paste0("Directory where the filtered sequences will be ",
                             "saved (default = <input_dir>_filtered)."),
