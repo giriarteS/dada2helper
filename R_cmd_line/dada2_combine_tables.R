@@ -46,7 +46,10 @@ combine_dada2_output = function(table_files, sequence_files){
     tmpseqs = Biostrings::readDNAStringSet(sequence_files[i])
     # if adding seq
     if (i > 1) {
-      # give new seqs new names
+      # give repeat seqs previous names and new seqs new names
+      repseqs = tmpseqs[as.character(tmpseqs) %in% as.character(all_seqs)]
+      new_names = names(all_seqs)[match(as.character(repseqs), as.character(all_seqs))]
+      repseqs_names = data.frame(old_names = names(repseqs), new_names)
       newseqs = tmpseqs[!as.character(tmpseqs) %in% as.character(all_seqs)]
       # get last taxon ID
       maxnum = max(as.numeric(sapply(strsplit(
@@ -55,9 +58,9 @@ combine_dada2_output = function(table_files, sequence_files){
       newnames =
         paste0("Taxon_", seq(from = maxnum + 1, to = maxnum + length(newseqs)))
       # make key to translate old names to new names
-      unchanged = names(tmpseqs)[!names(tmpseqs) %in% names(newseqs)]
-      keys[[i]] = rbind(data.frame(old_names = names(newseqs), newnames),
-                        data.frame(old_names = unchanged, newnames = unchanged))
+      keys[[i]] = rbind(repseqs_names,
+                        data.frame(old_names = names(newseqs), 
+                                   new_names = newnames))
       names(newseqs) = newnames
       # append new seqs to existing seqs
       all_seqs = Biostrings::append(all_seqs, newseqs)
