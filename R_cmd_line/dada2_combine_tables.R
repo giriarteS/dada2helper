@@ -69,7 +69,7 @@ combine_dada2_output = function(table_files, sequence_files){
       }
     } else {# if first seq set
       all_seqs = tmpseqs
-      keys[[i]] = data.frame(old_names = names(tmpseqs), newnames = names(tmpseqs))
+      keys[[i]] = data.frame(old_names = names(tmpseqs), new_names = names(tmpseqs))
     }
   }
 
@@ -78,7 +78,7 @@ combine_dada2_output = function(table_files, sequence_files){
   for (i in seq_along(table_files)) {
     tmptab = read.delim(table_files[i], skip = 1, check.names = FALSE)
     tmptab$`#OTU ID` =
-      keys[[i]]$newnames[match(tmptab$`#OTU ID`, keys[[i]]$old_names)]
+      keys[[i]]$new_names[match(tmptab$`#OTU ID`, keys[[i]]$old_names)]
     tables[[i]] = tmptab
   }
 
